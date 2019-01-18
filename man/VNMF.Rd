@@ -22,7 +22,7 @@ VNMF(Y)
   \item{W}{initial value of a matrix of contribution of each sample. If NULL, it is setted a standard exponential random number.}
   \item{H}{initial value of a excitation matrix. If NULL, it is setted proprtion of each culumns.}
   \item{tol}{absolute convergence tolerance. Defaults to 1e-6.}
-  \item{method}{method to be used for optimize. For more details, see helps for 'optim' function.}
+  \item{method}{method to be used for optimize. Defaults to 'BFGS'. For more details, see helps for 'optim' function.}
   \item{maxit}{maximum number of iterations. Defaults to 10000.}
   \item{seed}{seed for random number}
   \item{...}{other options for 'optim' function}
@@ -33,8 +33,13 @@ VNMF(Y)
 \value{
 %%  ~Describe the value returned
 %%  If it is a LIST, use
-\item{W}{Description of 'comp1'}
-\item{H}{Description of 'comp2'}
+\item{W}{contribution matrix}
+\item{H}{excitation matrix}
+\item{V}{regression coefficients}
+\item{a_W}{shape parameter of gamma distribution}
+\item{alpha_H}{parameters of Dirichlet posterior distribution}
+\item{iter}{total number of the iteration until convergence}
+\item{opt}{return of 'optim' function}
 %% ...
 }
 \references{
@@ -53,14 +58,24 @@ VNMF(Y)
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
+N <- 100
+K <- 10
+L <- 3
+W <- matrix(rgamma(N*L,shape=1,scale=1000),N,L)
+W <- W[,order(W[1,])]
+unnormH <- matrix(rgamma(L*K,shape=1,rate=1),L,K)
+H <- unnormH/rowSums(unnormH)
 
-## The function is currently defined as
-function (x)
-{
-  }
+Y <- matrix(rpois(N*K,W\%*\%H),N,K)
+mean(Y)
+out <- VNMF(Y,L=L)
+
+plot(out$W\%*\%out$H,Y)
+abline(0,1,lty=2)
+plot(out$W[,order(out$W[1,])],W)
+abline(0,1,lty=2)
+plot(out$H[order(out$W[1,]),],H)
+abline(0,1,lty=2)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
