@@ -1,6 +1,6 @@
 # BALSAMICO
 
-BALSAMICO is an R package for BAyesian Latent Semantic Analysis of MIcrobial Communities
+BALSAMICO is an R package for BAyesian Latent Semantic Analysis of MIcrobial COmmunities
 
 ### Authors:
 
