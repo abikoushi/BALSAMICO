@@ -5,14 +5,19 @@
 Calculate standard error from an object made by VNMF.
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+Calculate standard error from inverse Hessian matrix
 }
 \usage{
 se_VNMF(x)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
+<<<<<<< HEAD
   \item{x}{Object made by 'VNMF' function}
+=======
+  \item{rho}{standard error of the logarithmic shape parameter of the gamma distribution}
+  \item{V}{standard error of the regression coefficients}
+>>>>>>> 2ad53e36b9c33b789371fd4c934126e8cadd8e0c
 }
 \details{
 %%  ~~ If necessary, more details than the description above ~~
@@ -38,6 +43,7 @@ se_VNMF(x)
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \examples{
+<<<<<<< HEAD
 #generate synthetic data
 N <- 100
 K <- 100
@@ -53,6 +59,18 @@ unnormH <- matrix(rgamma(L*K,shape=1,rate=1),L,K)
 H <- unnormH/rowSums(unnormH)
 Y <- matrix(rpois(N*K,10000*W\%*\%H),N,K)
 out <- VNMF(Y,X=X,L=L,tau=10000,maxit = 100000)
+=======
+N <- 100
+K <- 10
+L <- 3
+W <- matrix(rgamma(N*L,shape=1,scale=1000),N,L)
+W <- W[,order(W[1,])]
+unnormH <- matrix(rgamma(L*K,shape=1,rate=1),L,K)
+H <- unnormH/rowSums(unnormH)
+
+Y <- matrix(rpois(N*K,W\%*\%H),N,K)
+out <- VNMF(Y,L=L)
+>>>>>>> 2ad53e36b9c33b789371fd4c934126e8cadd8e0c
 se_VNMF(out)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
