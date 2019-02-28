@@ -33,7 +33,6 @@ VNMF(Y)
 \value{
 %%  ~Describe the value returned
 %%  If it is a LIST, use
-<<<<<<< HEAD
 \item{W}{Contribution matrix}
 \item{H}{Exitation matrix}
 \item{V}{Coefficients}
@@ -42,7 +41,6 @@ VNMF(Y)
 \item{alpha_H}{Parameters of the Dirichlet distribution}
 \item{iter}{Number of iteration until convergence}
 \item{opt}{Return of the `'optim' function}
-=======
 \item{W}{contribution matrix}
 \item{H}{excitation matrix}
 \item{V}{regression coefficients}
@@ -50,7 +48,6 @@ VNMF(Y)
 \item{alpha_H}{parameters of Dirichlet posterior distribution}
 \item{iter}{total number of the iteration until convergence}
 \item{opt}{return of 'optim' function}
->>>>>>> 2ad53e36b9c33b789371fd4c934126e8cadd8e0c
 %% ...
 }
 \references{
@@ -69,23 +66,7 @@ VNMF(Y)
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \examples{
-<<<<<<< HEAD
 #generate synthetic data
-N <- 100
-K <- 100
-L <- 3
-D <- 3
-V <- matrix(c(1,1,1,-0.5,0,0.5,0.5,0,-0.5),D,L,byrow = TRUE)
-x1 <- rnorm(N)
-x2 <- rbinom(N,1,0.5)
-X <- model.matrix(~x1+x2)
-B <- exp(-X\%*\%V)
-W <- matrix(rgamma(N*L,0.5,B),N,L)
-unnormH <- matrix(rgamma(L*K,shape=1,rate=1),L,K)
-H <- unnormH/rowSums(unnormH)
-Y <- matrix(rpois(N*K,10000*W\%*\%H),N,K)
-out <- VNMF(Y,X=X,L=L,tau=10000,maxit = 100000)
-=======
 N <- 100
 K <- 10
 L <- 3
@@ -104,7 +85,6 @@ plot(out$W[,order(out$W[1,])],W)
 abline(0,1,lty=2)
 plot(out$H[order(out$W[1,]),],H)
 abline(0,1,lty=2)
->>>>>>> 2ad53e36b9c33b789371fd4c934126e8cadd8e0c
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
