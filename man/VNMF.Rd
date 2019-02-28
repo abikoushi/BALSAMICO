@@ -33,8 +33,14 @@ VNMF(Y)
 \value{
 %%  ~Describe the value returned
 %%  If it is a LIST, use
-\item{W}{Description of 'comp1'}
-\item{H}{Description of 'comp2'}
+\item{W}{Contribution matrix}
+\item{H}{Exitation matrix}
+\item{V}{Coefficients}
+\item{a_W}{Shape parameter of the gamma distribution}
+\item{B}{Scale parameter of the gamma distribution}
+\item{alpha_H}{Parameters of the Dirichlet distribution}
+\item{iter}{Number of iteration until convergence}
+\item{opt}{Return of the `'optim' function}
 %% ...
 }
 \references{
@@ -53,14 +59,21 @@ VNMF(Y)
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
-
-## The function is currently defined as
-function (x)
-{
-  }
+#generate synthetic data
+N <- 100
+K <- 100
+L <- 3
+D <- 3
+V <- matrix(c(1,1,1,-0.5,0,0.5,0.5,0,-0.5),D,L,byrow = TRUE)
+x1 <- rnorm(N)
+x2 <- rbinom(N,1,0.5)
+X <- model.matrix(~x1+x2)
+B <- exp(-X\%*\%V)
+W <- matrix(rgamma(N*L,0.5,B),N,L)
+unnormH <- matrix(rgamma(L*K,shape=1,rate=1),L,K)
+H <- unnormH/rowSums(unnormH)
+Y <- matrix(rpois(N*K,10000*W\%*\%H),N,K)
+out <- VNMF(Y,X=X,L=L,tau=10000,maxit = 100000)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
