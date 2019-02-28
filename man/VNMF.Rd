@@ -40,7 +40,7 @@ VNMF(Y)
 \item{B}{Scale parameter of the gamma distribution}
 \item{alpha_H}{Parameters of the Dirichlet distribution}
 \item{iter}{Number of iteration until convergence}
-\item{opt}{Return of the `'optim' function}
+\item{opt}{Return of the 'optim' function}
 \item{W}{contribution matrix}
 \item{H}{excitation matrix}
 \item{V}{regression coefficients}
@@ -74,16 +74,9 @@ W <- matrix(rgamma(N*L,shape=1,scale=1000),N,L)
 W <- W[,order(W[1,])]
 unnormH <- matrix(rgamma(L*K,shape=1,rate=1),L,K)
 H <- unnormH/rowSums(unnormH)
-
 Y <- matrix(rpois(N*K,W\%*\%H),N,K)
-mean(Y)
-out <- VNMF(Y,L=L)
-
+out <- VNMF(Y,tau=1,L=L)
 plot(out$W\%*\%out$H,Y)
-abline(0,1,lty=2)
-plot(out$W[,order(out$W[1,])],W)
-abline(0,1,lty=2)
-plot(out$H[order(out$W[1,]),],H)
 abline(0,1,lty=2)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
