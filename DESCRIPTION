@@ -1,11 +1,10 @@
 Package: BALSAMICO
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Bayesian Latent Semantic Analysis of Microbial Communities
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Author: Ko ABE
+Maintainer: Ko Abe <ko.abe@med.nagoya-u.ac.jp>
+Description: Bayesian Latent Semantic Analysis of Microbial Communities
+License: GPL
 Encoding: UTF-8
 LazyData: true
