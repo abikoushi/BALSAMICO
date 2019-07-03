@@ -8,7 +8,9 @@ Running NMF algorithms
 This function is the main interface to run non negative matrix factorization.
 }
 \usage{
-VNMF(Y)
+VNMF(Y,X=NULL,L=2,tau=1,a_W=1,alpha=rep(1,ncol(Y)),
+     V=NULL,W=NULL,H=NULL,tol=1e-6, method="BFGS",...,
+     maxit=10000,seed=NULL)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

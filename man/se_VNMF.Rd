@@ -13,8 +13,6 @@ se_VNMF(x)
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{Object made by 'VNMF' function}
-  \item{rho}{standard error of the logarithmic shape parameter of the gamma distribution}
-  \item{V}{standard error of the regression coefficients}
 }
 \details{
 %%  ~~ If necessary, more details than the description above ~~
@@ -22,7 +20,6 @@ se_VNMF(x)
 \value{
   \item{rho}{Standard error of log shape parameter}
   \item{V}{Standard error of coefficients}
-
 }
 \references{
 %% ~put references to the literature/web site here ~
