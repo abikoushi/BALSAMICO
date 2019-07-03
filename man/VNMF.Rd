@@ -41,13 +41,9 @@ VNMF(Y)
 \item{alpha_H}{Parameters of the Dirichlet distribution}
 \item{iter}{Number of iteration until convergence}
 \item{opt}{Return of the 'optim' function}
-\item{W}{contribution matrix}
-\item{H}{excitation matrix}
-\item{V}{regression coefficients}
-\item{a_W}{shape parameter of gamma distribution}
-\item{alpha_H}{parameters of Dirichlet posterior distribution}
-\item{iter}{total number of the iteration until convergence}
-\item{opt}{return of 'optim' function}
+\item{hessian}{Hessian matrix of objective function}
+\item{ELBO}{Evidence lower-bound}
+\item{seed}{Seed of the random numbers}
 %% ...
 }
 \references{
@@ -81,5 +77,5 @@ abline(0,1,lty=2)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
-\keyword{ ~kwd1 }% use one of  RShowDoc("KEYWORDS")
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+%\keyword{ ~kwd1 }% use one of  RShowDoc("KEYWORDS")
+%\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line

@@ -1,11 +1,8 @@
-VNMF <-function(Y,X=NULL,L=2,tau=NULL,alpha=rep(1,ncol(Y)),
-                a_W=1,V=NULL,W=NULL,H=NULL,tol=1e-6,
-                method="BFGS",maxit=10000,seed=NULL,...){
+VNMF <-function(Y,X=NULL,L=2,tau=1,a_W=1,alpha=rep(1,ncol(Y)),
+                V=NULL,W=NULL,H=NULL,tol=1e-6,
+                method="BFGS",...,maxit=10000,seed=NULL){
   if(is.null(X)){
-    X <-matrix(1,nrow = nrow(Y))
-  }
-  if(is.null(tau)){
-    tau <-rowSums(Y)
+    X <-matrix(1,nrow = nrow(Y)) 
   }
   llgamma <- function(par,W,logW){
     a_W <- exp(par[1])
@@ -46,20 +43,20 @@ VNMF <-function(Y,X=NULL,L=2,tau=NULL,alpha=rep(1,ncol(Y)),
     EH <- EelH <- H
   }
   for(iter in 1:maxit){
-    Sw <- EelW * (((Y*M)/(EelW %*% EelH)) %*% t(EelH))
-    Sh <- EelH * (t(EelW) %*% ((Y*M)/(EelW %*% EelH)))
+    Sw <- EelW * (((Y)/(EelW %*% EelH)) %*% t(EelH))
+    Sh <- EelH * (t(EelW) %*% ((Y)/(EelW %*% EelH)))
     alpha_W <- a_W + Sw
     alpha_H <- alpha + Sh
     den <- rowSums(alpha_H)
     EelH <-exp(digamma(alpha_H)-digamma(den))
     EH=alpha_H/den
-    beta_W = tau*M%*%t(EH)+B
+    beta_W = (tau*M)%*%t(EH)+B
     ElogW <- digamma(alpha_W)-log(beta_W)
     EelW <-exp(ElogW)
     EW=alpha_W/(beta_W)
     B <- exp(-X%*%V)
     opt <- optim(c(loga,V),llgamma,llgamma_grad,
-                 W=EW,logW=ElogW,method = method,hessian = TRUE,...)
+                 W=EW,logW=ElogW,method = method,...)
     if(all(abs(c(loga,V)-opt$par)<tol)){
       break
     }
@@ -68,13 +65,22 @@ VNMF <-function(Y,X=NULL,L=2,tau=NULL,alpha=rep(1,ncol(Y)),
     V <-matrix(opt$par[-1],D,L)
     B <- exp(-X%*%V)
   }
+  hessian <- optimHess(opt$par,llgamma,llgamma_grad,W=EW,logW=ElogW)
   rownames(V) <- colnames(X)
-  return(list(W=EW,H=EH,V=V,a_W=a_W,B=B,alpha_H=alpha_H,iter=iter,opt=opt))
+  fit <- (EW %*% EH) * tau
+  alpha0 <- rowSums(alpha_H)
+  ll <- sum(M*dpois(Y,fit,log = TRUE))
+  lp <- sum(rowSums((alpha-1)*log(EelH))-sum(lgamma(alpha))+lgamma(sum(alpha)))
+  H <- sum(rowSums(lgamma(alpha_H)) - lgamma(alpha0) + (alpha0-K)*digamma(alpha0) - rowSums((alpha_H-1)*digamma(alpha_H))) +
+    sum((1-alpha_W)*digamma(alpha_W)-log(beta_W)+alpha_W+lgamma(alpha_W))
+  det <- determinant(-hessian)
+  ELBO <- ll-lp+H+opt$value-det$sign*det$modulus/2
+  return(list(W=EW,H=EH,V=V,a_W=a_W,alpha_H=alpha_H,iter=iter,opt=opt,hessian=hessian,ELBO=ELBO,seed=seed))
 }
 
 se_VNMF <- function(out){
   dimV <- dim(out$V)
-  se <- sqrt(diag(solve(out$opt$hessian)))
+  se <- sqrt(diag(solve(out$hessian)))
   se_V <- matrix(se[-1],dimV[1],dimV[2])
   list(rho=se[1],V=se_V)
 }
