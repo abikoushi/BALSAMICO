@@ -8,6 +8,10 @@ Ko Abe and Teppei Shimamura
 
 Contact: ko.abe[at]med.nagoya-u.ac.jp and shimamura[at]med.nagoya-u.ac.jp
 
+## Referrence
+
+Abe, K., Hirayama, M., Ohno, K. et al. Hierarchical non-negative matrix factorization using clinical information for microbial communities. BMC Genomics 22, 104 (2021). [https://doi.org/10.1186/s12864-021-07401-y](https://doi.org/10.1186/s12864-021-07401-y)
+
 ## Installation
 
 Install the latest version of this package from Github by pasting in the following.
