@@ -2,7 +2,7 @@ VNMF <-function(Y,X=NULL,L=2,tau=1,a_W=1,alpha=rep(1,ncol(Y)),
                 V=NULL,W=NULL,H=NULL,tol=1e-6,
                 method="BFGS",...,maxit=10000,seed=NULL){
   if(is.null(X)){
-    X <-matrix(1,nrow = nrow(Y)) 
+    X <-matrix(1,nrow = nrow(Y))
   }
   llgamma <- function(par,W,logW){
     a_W <- exp(par[1])
@@ -48,12 +48,12 @@ VNMF <-function(Y,X=NULL,L=2,tau=1,a_W=1,alpha=rep(1,ncol(Y)),
     alpha_W <- a_W + Sw
     alpha_H <- alpha + Sh
     den <- rowSums(alpha_H)
-    EelH <-exp(digamma(alpha_H)-digamma(den))
-    EH=alpha_H/den
-    beta_W = (tau*M)%*%t(EH)+B
+    EelH <- exp(digamma(alpha_H)-digamma(den))
+    EH <- alpha_H/den
+    beta_W <- (tau*M)%*%t(EH)+B
     ElogW <- digamma(alpha_W)-log(beta_W)
     EelW <-exp(ElogW)
-    EW=alpha_W/(beta_W)
+    EW <- alpha_W/(beta_W)
     B <- exp(-X%*%V)
     opt <- optim(c(loga,V),llgamma,llgamma_grad,
                  W=EW,logW=ElogW,method = method,...)

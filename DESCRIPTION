@@ -1,9 +1,9 @@
 Package: BALSAMICO
 Type: Package
 Title: Bayesian Latent Semantic Analysis of Microbial Communities
-Version: 0.1.0
+Version: 0.1.1
 Author: Ko ABE
-Maintainer: Ko Abe <ko.abe@med.nagoya-u.ac.jp>
+Maintainer: Ko Abe <abe.csb@tmd.ac.jp>
 Description: Bayesian Latent Semantic Analysis of Microbial Communities
 License: GPL
 Encoding: UTF-8
